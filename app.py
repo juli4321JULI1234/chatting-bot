@@ -12,24 +12,76 @@ from utils import send_text_message
 
 load_dotenv()
 
-
-
 machine = TocMachine(
-    states=["user", "state1", "state2"],
+    states=["user", "state1", "state2", "state3", "state4", "state5", "state6", "state7"],
     transitions=[
         {
             "trigger": "advance",
             "source": "user",
             "dest": "state1",
-            "conditions": "is_going_to_state1",
+            "conditions": "waiter1",
         },
         {
             "trigger": "advance",
             "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
+            "dest": "user",
+            "conditions": "waiter0",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {
+            "trigger": "advance",
+            "source": "state1",
+            "dest": "state2",
+            "conditions": "menu1",
+        },
+        {
+            "trigger": "advance",
+            "source": "state1",
+            "dest": "state3",
+            "conditions": "menu2",
+        },
+        {
+            "trigger": "advance",
+            "source": "state1",
+            "dest": "state4",
+            "conditions": "menu3",
+        },
+        {
+            "trigger": "advance",
+            "source": "state2",
+            "dest": "state5",
+            "conditions": "oreder1",
+        },
+        {
+            "trigger": "advance",
+            "source": "state2",
+            "dest": "state1",
+            "conditions": "oreder10",
+        },
+        {
+            "trigger": "advance",
+            "source": "state3",
+            "dest": "state6",
+            "conditions": "oreder2",
+        },
+        {
+            "trigger": "advance",
+            "source": "state3",
+            "dest": "state1",
+            "conditions": "oreder20",
+        },
+        {
+            "trigger": "advance",
+            "source": "state4",
+            "dest": "state7",
+            "conditions": "oreder3",
+        },
+        {
+            "trigger": "advance",
+            "source": "state4",
+            "dest": "state1",
+            "conditions": "oreder30",
+        },
+        {"trigger": "go_back", "source": ["state5", "state6", "state7"], "dest": "user"},
     ],
     initial="user",
     auto_transitions=False,
@@ -60,7 +112,7 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
-
+    
     # parse webhook body
     try:
         events = parser.parse(body, signature)
