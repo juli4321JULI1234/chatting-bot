@@ -64,7 +64,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state2")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "選擇飲品嗎?(是/否)")
+        send_text_message(reply_token, "選擇飲料嗎?(是/否)")
 
     def on_exit_state2(self, event):
         print("Leaving state2")
