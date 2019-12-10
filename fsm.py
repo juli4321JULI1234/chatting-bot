@@ -55,7 +55,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state1")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "請參考我們的菜單1.飲料2.主菜3.甜點")
+        send_text_message(reply_token, "請參考我們的菜單\n1.飲料\n2.主菜\n3.甜點")
 
     def on_exit_state1(self, event):
         print("Leaving state1")
@@ -64,7 +64,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state2")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "選擇飲料嗎?(是否)")
+        send_text_message(reply_token, "選擇飲品嗎?(是/否)")
 
     def on_exit_state2(self, event):
         print("Leaving state2")
@@ -73,7 +73,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state3")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "選擇主菜嗎?(是否)")
+        send_text_message(reply_token, "選擇主菜嗎?(是/否)")
 
     def on_exit_state3(self, event):
         print("Leaving state3")
@@ -82,7 +82,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state4")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "選擇甜點嗎?(是否)")
+        send_text_message(reply_token, "選擇甜點嗎?(是/否)")
 
     def on_exit_state4(self, event):
         print("Leaving state4")
