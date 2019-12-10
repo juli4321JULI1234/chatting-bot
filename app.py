@@ -13,6 +13,7 @@ from utils import send_text_message
 load_dotenv()
 
 
+
 machine = TocMachine(
     states=["user", "state1", "state2"],
     transitions=[
@@ -37,6 +38,7 @@ machine = TocMachine(
 
 app = Flask(__name__, static_url_path="")
 
+#ssss
 
 # get channel_secret and channel_access_token from your environment variable
 channel_secret = os.getenv("LINE_CHANNEL_SECRET", None)
