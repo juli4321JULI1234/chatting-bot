@@ -53,7 +53,7 @@ machine = TocMachine(
         },
         {
             "trigger": "advance",
-            "source": "state2",
+            "source": "state5",
             "dest": "state1",
             "conditions": "oreder10",
         },
@@ -65,7 +65,7 @@ machine = TocMachine(
         },
         {
             "trigger": "advance",
-            "source": "state3",
+            "source": "state6",
             "dest": "state1",
             "conditions": "oreder20",
         },
@@ -77,7 +77,7 @@ machine = TocMachine(
         },
         {
             "trigger": "advance",
-            "source": "state4",
+            "source": "state7",
             "dest": "state1",
             "conditions": "oreder30",
         },
