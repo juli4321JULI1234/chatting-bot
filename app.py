@@ -13,18 +13,24 @@ from utils import send_text_message
 load_dotenv()
 
 machine = TocMachine(
-    states=["user", "state1", "state2", "state3", "state4", "state5", "state6", "state7"],
+    states=["user", "state0", "state1", "state2", "state3", "state4", "state5", "state6", "state7"],
     transitions=[
         {
             "trigger": "advance",
             "source": "user",
+            "dest": "state0",
+            "conditions": "start",
+        },
+        {
+            "trigger": "advance",
+            "source": "state0",
             "dest": "state1",
             "conditions": "waiter1",
         },
         {
             "trigger": "advance",
-            "source": "user",
-            "dest": "user",
+            "source": "state0",
+            "dest": "state0",
             "conditions": "waiter0",
         },
         {
@@ -156,7 +162,7 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
         if response == False:
-            send_text_message(event.reply_token, "不好意思請重新輸入歐")
+            send_text_message(event.reply_token, "不好意思我沒聽清楚，能再說一次嗎?")
 
     return "OK"
 

@@ -17,6 +17,10 @@ class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
 
+    def start(self, event):
+        text = event.message.text
+        return text.lower() == "開始"
+
     def waiter1(self, event):
         text = event.message.text
         return text.lower() == "是"
@@ -27,15 +31,15 @@ class TocMachine(GraphMachine):
 
     def menu1(self, event):
         text = event.message.text
-        return text.lower() == "飲料"
+        return text.lower() == "紅茶"
 
     def menu2(self, event):
         text = event.message.text
-        return text.lower() == "主菜"
+        return text.lower() == "綠茶"
 
     def menu3(self, event):
         text = event.message.text
-        return text.lower() == "甜點"
+        return text.lower() == "奶茶"
 
     def order1(self, event):
         text = event.message.text
@@ -60,12 +64,21 @@ class TocMachine(GraphMachine):
     def order30(self, event):
         text = event.message.text
         return text.lower() == "否"
+        
+    def on_enter_state0(self, event):
+        print("I'm entering state1")
+
+        reply_token = event.reply_token
+        send_text_message(reply_token, "歡迎光臨，請問您準備好點餐了嗎?(是/否)")
+
+    def on_exit_state0(self, event):
+        print("Leaving state1")
 
     def on_enter_state1(self, event):
         print("I'm entering state1")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "請看菜單選擇想要的餐點\n1.飲料\n2.主菜\n3.甜點")
+        send_text_message(reply_token, "可以參考我們的菜單決定要什麼飲料:\n1.紅茶\n2.綠茶\n3.奶茶")
 
     def on_exit_state1(self, event):
         print("Leaving state1")
@@ -74,7 +87,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state2")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "選擇飲料嗎?(是/否)")
+        send_text_message(reply_token, "選擇紅茶嗎?(是/否)")
 
     def on_exit_state2(self, event):
         print("Leaving state2")
@@ -83,7 +96,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state3")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "選擇主菜嗎?(是/否)")
+        send_text_message(reply_token, "選擇綠茶嗎?(是/否)")
 
     def on_exit_state3(self, event):
         print("Leaving state3")
@@ -92,7 +105,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state4")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "選擇甜點嗎?(是/否)")
+        send_text_message(reply_token, "選擇奶茶嗎?(是/否)")
 
     def on_exit_state4(self, event):
         print("Leaving state4")
@@ -100,8 +113,11 @@ class TocMachine(GraphMachine):
     def on_enter_state5(self, event):
         print("I'm entering state5")
 
-        reply_token = event.reply_token
-        send_text_message(reply_token, "好的飲料馬上來!")
+        message = ImageSendMessage(
+        original_content_url='https://img.ltn.com.tw/Upload/food/page/2015/08/27/150827-431-0-25xwf.jpg',
+        preview_image_url='https://img.ltn.com.tw/Upload/food/page/2015/08/27/150827-431-0-25xwf.jpg'
+        )
+        line_bot_api.reply_message(event.reply_token, message)
         self.go_back()
 
     def on_exit_state5(self):
@@ -111,8 +127,11 @@ class TocMachine(GraphMachine):
     def on_enter_state6(self, event):
         print("I'm entering state6")
 
-        reply_token = event.reply_token
-        send_text_message(reply_token, "好的主菜馬上來!")
+        message = ImageSendMessage(
+        original_content_url='https://images.chinatimes.com/newsphoto/2018-06-12/900/20180612002439.jpg',
+        preview_image_url='https://images.chinatimes.com/newsphoto/2018-06-12/900/20180612002439.jpg'
+        )
+        line_bot_api.reply_message(event.reply_token, message)
         self.go_back()
 
     def on_exit_state6(self):
@@ -122,11 +141,13 @@ class TocMachine(GraphMachine):
     def on_enter_state7(self, event):
         print("I'm entering state7")
 
-        reply_token = event.reply_token
-        send_text_message(reply_token, "好的甜點馬上來!")
+        message = ImageSendMessage(
+        original_content_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWwoM63_-cfsaK_DhChcUtzQOFeV9HLfXOG8t9hpSM_E8gWTBR&s',
+        preview_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWwoM63_-cfsaK_DhChcUtzQOFeV9HLfXOG8t9hpSM_E8gWTBR&s'
+        )
+        line_bot_api.reply_message(event.reply_token, message)
         self.go_back()
 
     def on_exit_state7(self):
 
         print("Leaving state7")
-        
