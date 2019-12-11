@@ -1,8 +1,18 @@
 from transitions.extensions import GraphMachine
 
+from flask import Flask, jsonify, request, abort, send_file
+
+from dotenv import load_dotenv
+from linebot import LineBotApi, WebhookParser
+from linebot.exceptions import InvalidSignatureError
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
+
 from utils import send_text_message
 
+# get channel_secret and channel_access_token from your environment variable
+line_bot_api = LineBotApi("yDfS/npqyljNHaMDb96ffIeq5amro6eMZB/lRzDiZSMoeRj6GcVPhNjBepQ3rX3fYo/MVg2s1Ka7TwNjmK31TeOwLX22/jqAGHBT0RCRcHIuIv4ezz+ep2En9YlhkVatV2YPbHfFfNNF4KBlSpJdoAdB04t89/1O/w1cDnyilFU=")
 
+#FSM REPLY
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
@@ -55,7 +65,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state1")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "請參考我們的菜單\n1.飲料\n2.主菜\n3.甜點")
+        send_text_message(reply_token, "請看菜單選擇想要的餐點\n1.飲料\n2.主菜\n3.甜點")
 
     def on_exit_state1(self, event):
         print("Leaving state1")
@@ -64,7 +74,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state2")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "選擇飲品嗎?(是/否)")
+        send_text_message(reply_token, "選擇飲料嗎?(是/否)")
 
     def on_exit_state2(self, event):
         print("Leaving state2")
@@ -95,6 +105,7 @@ class TocMachine(GraphMachine):
         self.go_back()
 
     def on_exit_state5(self):
+
         print("Leaving state5")
     
     def on_enter_state6(self, event):
@@ -105,6 +116,7 @@ class TocMachine(GraphMachine):
         self.go_back()
 
     def on_exit_state6(self):
+
         print("Leaving state6")
     
     def on_enter_state7(self, event):
@@ -115,5 +127,6 @@ class TocMachine(GraphMachine):
         self.go_back()
 
     def on_exit_state7(self):
+
         print("Leaving state7")
         
